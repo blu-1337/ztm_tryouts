@@ -1,39 +1,22 @@
-print("___Question #1:")
-# Write a program which will find all such numbers which are divisible by 7 but are not a multiple of 5, between 2000
-# and 3200 (both included).The numbers obtained should be printed in a comma-separated sequence on a single line.
+import requests
+from bs4 import BeautifulSoup
 
-for i in range(2000, 3201):
-    if i % 7 == 0 and i % 5 != 0:
-        print(i, end=',')
+res = requests.get('https://news.ycombinator.com/news')
+# print(res.text)  # this gets us the html file
 
-# Write a program which can compute the factorial of a given numbers.The results should be printed in a comma-separated
-# sequence on a single line.Suppose the following input is supplied to the program: 8 Then, the output should be:40320
+soup = BeautifulSoup(res.text, 'html.parser')  # this makes it as actual html because it was text format
+print(soup)
+print(soup.body.contents)
+print(soup.body)
+print(soup.find_all('div'))
+print(soup.find(id='score_33318687'))
+print(soup.select('a'))  # CSS selectors
+print(soup.select('.score'))
+print(soup.select('.storylink')[0])
+link = soup.select('.storylink')[0]  # gets first element
 
-print("")
-print("___Question #2:")
+votes = soup.select('.score')
+print(votes[0].get('id'))
 
-from functools import reduce
 
-input_nr = int(input("Enter number to get its factorial: "))
 
-factorial = reduce(lambda x, y: x * y, range(1, input_nr + 1))
-print(factorial)
-
-print("")
-print("___Question #3:")
-
-# With a given integral number n, write a program to generate a dictionary that contains (i, i x i) such that is an
-# integral number between 1 and n (both included). and then the program should print the dictionary.Suppose the
-# following input is supplied to the program: 8
-#
-# Then, the output should be:
-#
-# {1: 1, 2: 4, 3: 9, 4: 16, 5: 25, 6: 36, 7: 49, 8: 64}
-
-input_nr = 8
-my_dick = {}
-
-for i in range(1, input_nr+1):
-    my_dick[i] = i * i
-
-print(my_dick)
