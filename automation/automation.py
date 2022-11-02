@@ -110,108 +110,137 @@ def select_filters():
                                                              '/html/body/ytd-app/div[1]/ytd-page-manager/ytd-search/div[1]/ytd-two-column-search-results-renderer/div[2]/div/ytd-section-list-renderer/div[1]/div[2]/ytd-search-sub-menu-renderer/div[1]/iron-collapse/div/ytd-search-filter-group-renderer[1]/ytd-search-filter-renderer[3]/a/div/yt-formatted-string')))
     this_week.click()
 
+
 def fetch_videos():
+    driver.execute_script(
+        'window.scrollTo(0, document.documentElement.scrollHeight)')
+    sleep(2)
+    driver.execute_script(
+        'window.scrollTo(0, document.documentElement.scrollHeight)')
+    sleep(2)
+    driver.execute_script(
+        'window.scrollTo(0, document.documentElement.scrollHeight)')
+
     wait.until(EC.visibility_of_any_elements_located((By.CSS_SELECTOR, 'ytd-video-renderer')))
     return driver.find_elements(By.CSS_SELECTOR, 'ytd-video-renderer')  # list all videos
 
 
+def find_comment_section():
+    # ActionChains(driver).key_down(Keys.END).key_up(Keys.END).perform()
+    driver.execute_script(
+        'window.scrollTo(0, document.documentElement.scrollHeight / 4)')  # scroll down to comment section, if this does not work, it will keep on scrolling down
 
-def comment_poster(total_commentsl: int, comment: str):
-videos = fetch_videos()
+    print('should of went down now a bit')
 
-print('fetched videos')
-counter = 0
-for video in videos:
-    if counter == total_comments:
-        print(f'We reached {total_comments} comments. Stopping script. Goodbye!')
-        break
+    comments_found = False
 
-    print(f'counter is {counter}')
-    #     type(video)
-    #     print(video)
-    #     print('___contents:', video.get_attribute('innerHTML'))
-    #     video.get_attribute('innterHTML')
     try:
-        video_views = video.find_element(By.CSS_SELECTOR, '#metadata-line > span:nth-child(2)').get_attribute(
-            'innerHTML')
-        print(video_views)
+        driver.find_elements(By.CSS_SELECTOR, '#placeholder-area')
+        comments_found = True
+    except:
+        comments_found = False
 
-        if 'views' in video_views:  # check if the word is in there, 1K views denotes a video, all else is a live or playlist
-            # go to video and do shit
-            print('video also contains views, nicee, proceding to leave a comment')
-
-            print('clicking on video...')
-            video.find_element(By.CSS_SELECTOR,
-                               ' #video-title > yt-formatted-string').click()  # clicks on video title
-            print('___clicked video')
-
-            # scroll down to comment section
-            #             wait.until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR, 'body')))
-            #             driver.find_element_by_tag_name('body').send_keys(Keys.END)
-
-            wait.until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR, '#title > h1')))
-            print('found the title :)')
-
-            # ActionChains(driver).key_down(Keys.END).key_up(Keys.END).perform()
-            driver.execute_script('window.scrollTo(0, document.documentElement.scrollHeight / 3)')  # scroll down to comment section
-
-            print('should of went down now')
+    if not comments_found:
+        print("initial height scan not enough, proceeding back to top and slowly down by 100px...")
+        driver.execute_script('window.scrollTo(0, 0)')
+        while True:
+            try:
+                driver.find_elements(By.CSS_SELECTOR, '#placeholder-area')
+                break
+            except:
+                print('not quite at the comment section, scrolling down a little bit more...')
+                driver.execute_script('window.scrollBy(0, 100)')  # scroll down to comment section
+                sleep(0.5)
 
 
 
-            while True:
-                try:
-                    driver.find_elements(By.CSS_SELECTOR, '#placeholder-area')
-                    break
-                except:
-                    print('not quite at the comment section, scrolling down a little bit more...')
-                    driver.execute_script('window.scrollBy(0, 100)')  # scroll down to comment section
+def duplicate_comments_found():  # returns true if duplicates found
+    sleep(2)  # wait until the comments appear
+    all_comments = driver.find_element(By.CSS_SELECTOR, '#comments').get_attribute('innerHTML')
+    own_comments_counter = all_comments.count('SOUNDSOLACE')  # apare de două ori când nu e niciun comment
+    print('comment found: ', own_comments_counter)
 
-            all_comments = driver.find_element(By.CSS_SELECTOR, '#comments').get_attribute('innerHTML')
-            comments_counter = all_comments.count('SOUNDSOLACE')  # apare de două ori când nu e niciun comment
-
-            if comments_counter > 2:
-                driver.execute_script('window.history.go(-1)')
-                print("This video already has a comment on it! Going back...")
-                continue
+    return own_comments_counter > 2
 
 
+def write_comment():
+    # add comment
+    wait.until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR, '#placeholder-area')))
+    comment_box = driver.find_element(By.CSS_SELECTOR, '#placeholder-area')
+    comment_box.click()
+    print('clicked textbox')
 
+    comment_box = driver.find_element(By.CSS_SELECTOR, '#contenteditable-root')
+    print('writing to textbox...')
+    #             for letter in comment:  # in case you do not have emojis, but we do have them
+    #                 comment_box.send_keys(letter)
+    #                 wait_time = random.randint(0, 1000) / 1000
+    #                 sleep(wait_time)
+
+    pyperclip.copy(comment)
+    sleep(1)
+    ActionChains(driver).key_down(Keys.CONTROL).send_keys('v').key_up(Keys.CONTROL).perform()
+
+    print('pasted comment, now waiting 1 second...')
+
+    sleep(1)
+    comment_box_submit = driver.find_element(By.CSS_SELECTOR,
+                                             '#submit-button > yt-button-shape > button')
+    comment_box_submit.click()
+    print('finished writing to textbox, now going back one page after 3 seconds...')
+    sleep(3)
+    driver.execute_script('window.history.go(-1)')
+
+def post_comments(total_commentsl: int, comment: str):
+    videos = fetch_videos()
+
+    print('fetched videos')
+    comments_counter = 0
+    print(f'videos have length of {len(videos)}')
+    for video in videos:
+        if comments_counter == total_comments:
+            print(f'We reached {total_comments} comments. Stopping script. Goodbye!')
+            break
+
+        print(f'comments counter is {comments_counter}')
+
+        try:
+            video_views = video.find_element(By.CSS_SELECTOR, '#metadata-line > span:nth-child(2)').get_attribute(
+                'innerHTML')
+            print(video_views)
+
+            if 'views' in video_views:  # check if the word is in there, 1K views denotes a video, all else is a live or playlist
+                # go to video and do shit
+                print('video also contains views, nicee, proceding to leave a comment')
+
+                print('clicking on video...')
+                video.find_element(By.CSS_SELECTOR,
+                                   ' #video-title > yt-formatted-string').click()  # clicks on video title
+                print('___clicked video')
+
+                # scroll down to comment section
+                #             wait.until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR, 'body')))
+                #             driver.find_element_by_tag_name('body').send_keys(Keys.END)
+
+                wait.until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR, '#title > h1')))
+                print('found the title :), page is loaded')
+
+                sleep(2)  # wait a bit until the page fully loads
+                find_comment_section()
+
+
+                if duplicate_comments_found():
+                    driver.execute_script('window.history.go(-1)')
+                    print("This video already has a comment on it! Going back...")
+                    continue
+                else:
+                    # do main shit
+                    write_comment()
+                    comments_counter += 1
             else:
-                # add comment
-                wait.until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR, '#placeholder-area')))
-                comment_box = driver.find_element(By.CSS_SELECTOR, '#placeholder-area')
-                comment_box.click()
-                print('clicked textbox')
-
-                comment_box = driver.find_element(By.CSS_SELECTOR, '#contenteditable-root')
-                print('writing to textbox...')
-                #             for letter in comment:  # in case you do not have emojis, but we do have them
-                #                 comment_box.send_keys(letter)
-                #                 wait_time = random.randint(0, 1000) / 1000
-                #                 sleep(wait_time)
-
-                pyperclip.copy(comment)
-                sleep(1)
-                ActionChains(driver).key_down(Keys.CONTROL).send_keys('v').key_up(Keys.CONTROL).perform()
-                #             actions = ActionChains(comment_box)
-                #             actions.key_down(Keys.CONTROL)
-                #             actions.send_keys("v")
-                #             actions.key_up(Keys.CONTROL)
-                print('pasted comment, now waiting 1 second...')
-                sleep(1)
-                comment_box_submit = driver.find_element(By.CSS_SELECTOR,
-                                                         '#submit-button > yt-button-shape > button')
-                comment_box_submit.click()
-                print('finished writing to textbox, now going back one page after 3 seconds...')
-                sleep(3)
-                driver.execute_script('window.history.go(-1)')
-            counter += 1
-
-        else:
-            print("this is not a video, it's a live or something else")
-    except Exception as e:
-        print('there is no meta for views, we will continue with next video', 'exception was: ', e)
+                print("this is not a video, it's a live or something else")
+        except Exception as e:
+            print('there is no meta for views, we will continue with next video', 'exception was: ', e)
 
 
 # # Step 03: accept terms and rights
@@ -222,7 +251,7 @@ sign_in()
 # wait for search button to appear, you need to tap yes on phone before this...
 search_youtube()
 select_filters()
-comment_poster(total_comments, comment)
+post_comments(total_comments, comment)
 
 print('____________REACHED END OF PROGRAM')
 
