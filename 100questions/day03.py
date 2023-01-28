@@ -72,3 +72,34 @@ for number in values_list:
   if convert_binary_to_decimal(number) % 5 == 0:
     print(number)
 
+# one liner solution here:
+# print(*(binary for binary in input().split(',') if int(binary,base=2)%5==0))
+
+
+print("___Question #12:")
+# Question 12
+# Question:
+# Write a program, which will find all such numbers between 1000 and 3000 (both included) such that each digit of the number is an even number.The numbers obtained should be printed in a comma-separated sequence on a single line.
+
+# Hints:
+# In case of input data being supplied to the question, it should be assumed to be a console input.
+
+
+def strip_numbers(number):
+  numbers = []
+  while number > 0:
+    numbers.append(int(number%10))
+    number = (number-(number%10))/10
+  numbers.reverse()
+  return numbers
+
+
+print(strip_numbers(1234))
+for number in range(1000,3001):
+  all_digits_are_even = True
+  for digit in strip_numbers(number):
+    if digit % 2 != 0:
+      all_digits_are_even = False
+      break
+  if(all_digits_are_even):
+    print(number, end=",")
