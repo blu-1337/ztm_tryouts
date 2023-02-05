@@ -48,4 +48,16 @@ print("___Question #21:")
 # Hints:
 # In case of input data being supplied to the question, it should be assumed to be a console input.Here distance indicates to euclidean distance.Import math module to use sqrt function.
 
+up = int(input("UP "))
+down = int(input("DOWN "))
+left = int(input("LEFT "))
+right = int(input("RIGHT "))
+
+x_movement = abs(up - down)
+y_movement = abs(left - right)
+if x_movement > y_movement:
+  print(x_movement)
+else:
+  print(y_movement)
+
 
