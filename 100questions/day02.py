@@ -1,142 +1,75 @@
-print("___Question #4:")
+====== EMACS EDITING MODE – CTRL DELETE/MOVE CHARACTER SHORTCUTS ======
 
-# Question:
-# Write a program which accepts a sequence of comma-separated numbers from console and generate a list
-# and a tuple which contains every number.Suppose the following input is supplied to the program:
-#
-# 34,67,55,33,12,98
-# Then, the output should be:
-#
-# ['34', '67', '55', '33', '12', '98']
-# ('34', '67', '55', '33', '12', '98')
+These are basic commands that use the control keyboard button. Basically these are ways to delete a character.
 
-input_nrs = "34,67,55,33,12,98"
+^ SHORTCUT ^ WHAT IT DOES ^
+| CTRL-B | &nbsp;&nbsp;&nbsp;&nbsp; Allows you to move backward one character without deleting |
+| CTRL-F | Allows you to move forward one character without deleting |
+| DEL | Lets  you delete one character backwards |
+| CTRL-D | Lets you delete one character forwards |
 
-print(tuple(input_nrs.split(',')))
+====== EMACS EDITING MODE – ESCAPE DELETE/MOVE/KILL KEYBOARD SHORTCUTS ======
 
-print("___Question #5:")
+These are basic commands that use the escape keyboard button. These commands allow you to move or delete entire words.
 
-# Question:
-# Define a class which has at least two methods:
-#
-# getString: to get a string from console input
-# printString: to print the string in upper case.
-# Also please include simple test function to test the class methods.
-#
-# Hints:
+^ SHORTCUT ^ WHAT IT DOES ^
+| ESC-B | Allows you to move backward one word without deleting |
+| ESC-F | Allows you to move forward one word without deleting |
+| ESC-DEL |     Lets you delete or “kill” one word backwards |
+| ESC-CTRL-H | Lets you delete or “kill” one word backwards |
+| ESC-D | Lets you delete or “kill” one word forward |
 
-# class MyClass():
-#
-#     def getString(self):
-#         self.input = input("Inser your string: ")
-#     def printString(self):
-#         print(self.input.upper())
-#
-# cat = MyClass()
-# cat.getString()
-# cat.printString()
+===== EMACS EDITING MODE – LINE COMMAND MOVE/KILL/DELETE SHORTCUTS =====
 
-print("___Question #6:")
+These are basic commands that use the CTRL keyboard buttons. These commands allow you to move around, delete or “kill” an entire line.
 
-# Question:
-# Write a program that calculates and prints the value according to the given formula:
-#
-# Q = Square root of [(2 _ C _ D)/H]
-#
-# Following are the fixed values of C and H:
-#
-# C is 50. H is 30.
-#
-# D is the variable whose values should be input to your program in a comma-separated sequence.
-# For example Let us assume the following comma separated input sequence is given to the program:
-#
-# 100,150,180
-# The output of the program should be:
-#
-# 18,22,24
-from math import sqrt
+^ SHORTCUT ^ WHAT IT DOES ^
+| CTRL-A | Move cursor to the beginning of the line |
+| CTRL-E | Move to the end of the line |
+| CTRL-K | Kill forward to the end of a line |
+| CTRL-U | Kill the line from the beginning to this point |
 
-C = 50
-H = 30
-D = [100,150,180]
-# Q = sqrt(2*C*D)/H
+===== EMACS EDITING MODE – USING HISTORICAL INFORMATION =====
 
-print(list(map(lambda x: int(sqrt(2*C*x/H)), D)))
+These are basic commands that use the CTRL and ESC keyboard buttons. These commands recall your history.
+
+^ SHORTCUT ^ WHAT IT DOES ^
+| CTRL-R | Search Backwards |
+| CTRL-P | Move to the previous line |
+| CTRL-N | Move to the next line |
+| ESC-< | Move to the first line in the history file |
+| ESC-> | Move to the last line in the history file |
+
+===== EMACS EDITING MODE – COMPLETION SHORTCUTS =====
+
+The textual commands help you autocomplete names of commands, user names, file names, functions, etc… When you type in a word of text followed by TAB, bash will try to finish the filename for you. This is one of the most powerful but less used bash shortcuts.
+
+^ SHORTCUT ^ WHAT IT DOES ^
+| TAB | Try to finish the text |
+| ESC-TAB | Attempt the completion from previous commands in the history list |
+| ESC-? | List all the possible completions |
+| ESC-/ | Attempt the filename completion |
+| ESC-~ | Attempt the username completion |
+| ESC-$ | Attempt a variable completion |
+| ESC-@ | Attempt hostname completion |
+| ESC-! | Attempt the command completion |
+| CTRL-X | / List the possible filename completions |
+| CTRL-X | ~ List the possible username completions |
+| CTRL-X | $ List the possible variable completions |
+| CTRL-X | @ List the possible hostname completions |
+| CTRL-X | ! list the possible command completions |
 
 
-print("___Question #7:")
+====== THE SMARTFILE FAVORITE BASH SHORTCUTS ======
 
+These are some of our favorite emac shortcuts here at SmartFile. Enjoy!
 
-# Question:
-# _Write a program which takes 2 digits, X,Y as input and generates a 2-dimensional array.
-# The element value in the i-th row and j-th column of the array should be i _ j.*
-#
-# Note: i=0,1.., X-1; j=0,1,¡­Y-1. Suppose the following inputs are given to the program: 3,5
-#
-# Then, the output of the program should be:
-#
-# [[0, 0, 0, 0, 0], [0, 1, 2, 3, 4], [0, 2, 4, 6, 8]]
-
-x = 3
-y = 5
-new_array = []
-for i in range (0,x):
-    j_array = []
-    for j in range (0,y):
-        j_array.append(i*j)
-    new_array.append(j_array)
-print(new_array)
-
-print("___Question #8:")
-
-# Question:
-# Write a program that accepts a comma separated sequence of words as input and prints the words in a
-# comma-separated sequence after sorting them alphabetically.
-#
-# Suppose the following input is supplied to the program:
-#
-# without,hello,bag,world
-# Then, the output should be:
-#
-# bag,hello,without,world
-
-input_words = "without,hello,bag,world"
-
-input_words = list(input_words.split(','))
-
-print(input_words)
-
-input_words.sort()
-
-print(input_words)
-
-
-
-print("___Question #9:")
-
-# Write a program that accepts sequence of lines as input and prints the lines after making
-# all characters in the sentence capitalized.
-#
-# Suppose the following input is supplied to the program:
-#
-# Hello world
-# Practice makes perfect
-# Then, the output should be:
-#
-# HELLO WORLD
-# PRACTICE MAKES PERFECT
-
-lines = []
-while True:
-    input_sentance = input()
-
-    # 👇️ if user pressed Enter without a value, break out of loop
-    if input_sentance == '':
-        break
-    else:
-        lines.append(input_sentance.upper() + '\n')
-
-for word in lines:
-    print(word)
-
+^ SHORTCUT ^ WHAT IT DOES ^
+| CTRL-Y | Undo the last word/line deleted or “killed” |
+| CTRL-L | Clears the screen and puts the line your working on at the top |
+| CTRL-T | Transpose 2 characters on either side of a point and move that point forward by one |
+| CTRL-V | Quoted insert |
+| ESC-C | Capitalize this word after this point |
+| ESC-U | Make the letters in this word all uppercase after this point |
+| ESC-L | Make the letters in this word all lowercase after this point |
 
