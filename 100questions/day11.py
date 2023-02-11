@@ -68,3 +68,23 @@ print("___Question #42:")
 # Hints:
 # Use map() to generate a list.Use filter() to filter elements of a list.Use lambda to define anonymous functions.
 
+initial_list = [1,2,3,4,5,6,7,8,9,10]
+
+# result = list(filter(lambda x: True if (x%2==0) else False, map(lambda x : x**2, initial_list)))
+
+result = list(map(lambda x: x**2, filter(lambda x: x%2==0, initial_list)))
+
+print(result)
+
+print("___Question #43:")
+
+# Question:
+# Write a program which can filter() to make a list whose elements are even number between 1 and 20 (both included).
+
+# Hints:
+# Use filter() to filter elements of a list.Use lambda to define anonymous functions.
+
+
+result = list(map(lambda x: x**2, filter(lambda x: x%2==0, range(1,21))))
+
+print(result)
