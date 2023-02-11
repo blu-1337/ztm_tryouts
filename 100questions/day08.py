@@ -88,3 +88,17 @@ print("___Question #25:")
 
 # Hints:
 # Define an instance parameter, need add it in __init__ method.You can init an object with construct parameter or set the value later
+
+class ThatClass():
+  name = "Cara"
+
+  def __init__(self, name = "Unnamed"):
+    self.name = name
+    print("I am myself, I guess.")
+
+
+boy = ThatClass()
+girl = ThatClass("Tiffany")
+print(boy.name)
+print(girl.name)
+print(ThatClass.name)
