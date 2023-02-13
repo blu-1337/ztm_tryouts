@@ -6,6 +6,10 @@ print("___Question #80:")
 # Hints
 # Use list comprehension to delete a bunch of element from a list.
 
+input_list = [5,6,77,45,22,12,24]
+new_list = [i for i in input_list if i % 2 != 0]
+print(new_list)
+
 print("___Question #81:")
 
 # Question
@@ -13,6 +17,10 @@ print("___Question #81:")
 
 # Hints
 # Use list comprehension to delete a bunch of element from a list.
+
+input_list = [12,24,35,70,88,120,155]
+new_list = [i for i in input_list if i % 5 == 0 and i % 7 == 0]
+print(new_list)
 
 print("___Question #82:")
 
@@ -22,6 +30,11 @@ print("___Question #82:")
 # Hints
 # Use list comprehension to delete a bunch of element from a list. Use enumerate() to get (index, value) tuple.
 
+input_list = [12,24,35,70,88,120,155]
+new_list = [i for idx, i in enumerate(input_list) if idx % 2!=0]
+print(new_list)
+
+
 print("___Question #83:")
 
 # Question
@@ -29,6 +42,11 @@ print("___Question #83:")
 
 # Hints
 # Use list comprehension to delete a bunch of element from a list. Use enumerate() to get (index, value) tuple.
+
+input_list = [12,24,35,70,88,120,155]
+new_list = [i for id, i in enumerate(input_list) if (id!=3) and (id!=5)]
+print(new_list)
+
 
 print("___Question #84:")
 
@@ -38,4 +56,6 @@ print("___Question #84:")
 # Hints
 # Use list comprehension to make an array.
 
+array = [[[0 for i in range(0,3)] for j in range (0,5)] for k in range(0,8)]
+print(array)
 
