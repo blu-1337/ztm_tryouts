@@ -84,6 +84,27 @@ print("___Question #62:")
 # Hints
 # We can define recursive function in Python. Use list comprehension to generate a list from an existing list. Use string.join() to join a list of strings.
 
+
+
+def fibocalc2(n):
+  result = []
+  if n == 0:
+    result.append(0)
+    return result
+  if n == 1:
+    result.append(0)
+    result.append(1)
+    return result
+  result = [0,1]
+  for i in range(2,n+1):
+    fib = result[-1] + result[-2]
+    result.append(fib)
+  return result
+
+print(fibocalc2(7))  
+
+
+
 print("___Question #63:")
 
 # Question
@@ -99,6 +120,17 @@ print("___Question #63:")
 
 # Hints
 # Use yield to produce the next value in generator.
+
+
+def gen(n):
+  result_list = []
+  for i in range(0,n+1):
+    if i%2==0:
+      result_list.append(i)
+  return result_list
+
+
+print(gen(10))
 
 print("___Question #64:")
 
@@ -116,3 +148,13 @@ print("___Question #64:")
 # Hints
 # Use yield to produce the next value in generator.
 
+
+def gen(n):
+  result_list = []
+  for i in range(0,n+1):
+    if i%5==0 and i%7==0:
+      result_list.append(i)
+  return result_list
+
+
+print(gen(100))
