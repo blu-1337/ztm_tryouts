@@ -35,7 +35,7 @@ print(result)
 print("___Question #101:")
 
 # Question
-# You are given a string.Your task is to count the frequency of letters of the string and print the letters in descending order of frequency.
+# You are given a string. Your task is to count the frequency of letters of the string and print the letters in descending order of frequency.
 
 # If the following string is given as input to the program:
 
@@ -49,6 +49,23 @@ print("___Question #101:")
 # e 1
 # Hints
 # Count frequency with dictionary and sort by Value from dictionary Items
+
+input_text = "aabbbccde"
+result = ""
+my_dict = {}
+
+formatted_text = [*input_text]
+for word in formatted_text:
+  if word in my_dict:
+    my_dict[word] += 1
+  else:
+    my_dict[word] = 1
+
+result = my_dict  # this is not properly sorted
+
+
+print(result)
+
 
 print("___Question #102:")
 
@@ -65,6 +82,18 @@ print("___Question #102:")
 # Hints
 # Use isdigit() and isalpha() function
 
+input_text = "Hello321Bye360"
+formatted_text = [*input_text]
+digits = 0
+letter = 0
+for char in formatted_text:
+  if char.isdigit():
+    digits += 1
+  else:
+    letter += 1
+print(f"{digits} digits and {letter} letters!")
+
+
 print("___Question #103:")
 
 # Question
@@ -78,3 +107,10 @@ print("___Question #103:")
 # 15
 # Hints
 # Make a recursive function to get the sum
+
+def summer(n):
+  if n == 0:
+    return 0
+  return n+summer(n-1)
+
+print(summer(5))
