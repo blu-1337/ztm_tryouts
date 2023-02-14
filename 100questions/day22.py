@@ -18,6 +18,21 @@ print("___Question #90:")
 # Hints
 # Use dict to store key/value pairs. Use dict.get() method to lookup a key with default value.
 
+input_text = "abcdefgabc"
+result = ""
+my_dict = {}
+
+formatted_text = [*input_text]
+for word in formatted_text:
+  if word in my_dict:
+    my_dict[word] += 1
+  else:
+    my_dict[word] = 1
+
+result = my_dict
+
+print(result)
+
 print("___Question #91:")
 
 # Question
@@ -31,6 +46,12 @@ print("___Question #91:")
 # ris etov ot esir
 # Hints
 # Use list[::-1] to iterate a list in a reverse order.
+
+input_text = "rise to vote sir"
+
+input_text = input_text[::-1]
+
+print(input_text)
 
 print("___Question #92:")
 
@@ -46,6 +67,13 @@ print("___Question #92:")
 # Hints
 # Use list[::2] to iterate a list by step 2.
 
+input_text = 'H1e2l3l4o5w6o7r8l9d'
+for i in input_text[::2]:
+  print(i, end="")
+  print("")
+
+
+
 print("___Question #93:")
 
 # Question
@@ -53,6 +81,13 @@ print("___Question #93:")
 
 # Hints
 # Use itertools.permutations() to get permutations of list.
+
+
+import itertools
+input_list = [1,2,3]
+
+permutations = list(itertools.permutations(input_list))
+print(permutations)
 
 print("___Question #94:")
 
@@ -62,4 +97,17 @@ print("___Question #94:")
 # Hints
 # Use for loop to iterate all possible solutions.
 
+heads = 35
+legs = 94
+found = False
 
+for i in range(1, 36):
+  j = heads - i
+  if 2*i + 4*j == legs:
+    print(f"{i} chicken and {j} rabbits")
+    found = True
+    break
+if(not found): 
+  print("NOT FOUND!!!")
+
+  
