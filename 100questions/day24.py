@@ -17,6 +17,21 @@ print("___Question #100:")
 # Hints
 # Make a list to get the input order and a dictionary to count the word frequency
 
+input_text = "bcdef abcdefg bcde bcdef"
+result = ""
+my_dict = {}
+
+formatted_text = input_text.split(" ")
+for word in formatted_text:
+  if word in my_dict:
+    my_dict[word] += 1
+  else:
+    my_dict[word] = 1
+
+result = my_dict
+
+print(result)
+
 print("___Question #101:")
 
 # Question
